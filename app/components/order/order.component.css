@@ -1,0 +1,32 @@
+
+.invoice-header {
+    font-size: 15;
+    color:#4040FC;
+}
+/* .ivoice-date {
+    font-size: 15;
+} */
+
+.total-summary {
+    background-color: black;
+    font-weight: bold;
+    
+}
+
+.total-summary-item {
+    color: white;
+}
+
+.bill-item-container {
+    padding: 10;
+
+}
+
+.bill-header {
+    background-color: #494848;
+    color: #DAD8D8;
+}
+
+.odd {
+    background-color: #D6D6D6;
+}

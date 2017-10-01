@@ -1,0 +1,47 @@
+
+.invoice-header {
+    font-size: 15;
+    color:#4040FC;
+}
+
+.total-summary {
+    background-color: black;
+    font-weight: bold;
+    
+}
+
+.total-summary-item {
+    color: white;
+}
+
+.bill-item-container {
+    padding: 10;
+
+}
+
+
+.odd {
+    background-color: #F8F8F8;
+}
+
+.image-container{
+    height: 80;
+    max-width: 30%;
+}
+.product-image{
+
+    border-radius: 50;
+}
+
+.product-detail-container {
+    padding: 10;
+    vertical-align: top;
+}
+
+.product-name {
+    font-size: 20;
+}
+
+.produt-desc {
+    font-size: 15;
+}

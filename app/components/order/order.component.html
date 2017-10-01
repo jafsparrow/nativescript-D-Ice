@@ -1,0 +1,72 @@
+<GridLayout backgroundColor="#dedede" rows="auto, auto, *, auto">
+
+    <GridLayout columns="*,*,*"
+        row="1"
+        class="m-x-10 m-t-5 p-l-15 invoice-header">
+        <Label 
+            col="0"
+            class="p-10"
+            
+            text="DE101"></Label>
+        <Label 
+            col="1"
+            class="p-10"
+            
+            text="Reliance"></Label>
+        <Label 
+            col="2"
+            class="p-10"
+            
+            text="30/06/2017"></Label>
+    </GridLayout>
+
+
+    <StackLayout backgroundColor="#ffffff"
+        row="2"
+        class="m-x-10 m-t-5 p-5">
+            <!-- >> angular-listview-header-footer -->
+            <RadListView [items]="cartItems">
+                <ng-template  let-item="item" let-odd="odd">
+
+                    <StackLayout orientation="horizontal"
+                        class="bill-item-container bill-item"
+                        [class.odd]="odd">
+                        <Label [text]="item.name" width="50%"></Label>
+                        <Label [text]="item.quantity" width="30%"></Label>
+                        <Label [text]="item.totalPrice" ></Label>
+                    </StackLayout>
+
+                </ng-template>
+
+                <ng-template tkListViewHeader>
+
+                    <StackLayout orientation="horizontal"
+                        class="bill-item-container bill-header">
+                        <Label text="Item" width="50%"></Label>
+                        <Label text="Quantity" width="30%"></Label>
+                        <Label text="Amount" ></Label>
+                    </StackLayout>
+                </ng-template>
+                <ng-template tkListViewFooter>
+                    <GridLayout>
+                        <Button class="btn btn-default" text="Print invoice"
+                            (tap)="printInvoice()"></Button>
+                    </GridLayout>
+                </ng-template>
+            </RadListView>
+
+    </StackLayout>
+    <StackLayout
+        row="3"
+        class="m-x-10 m-t-5 p-5 total-summary">
+        <GridLayout columns="*,*, auto"
+            class="p-5">
+            <Label col="0"
+                class="h4 total-summary-item" text="Total"></Label>
+            <Label col="1"
+                class="h4 total-summary-item" text="{{ cartItemCount }} items"></Label>
+            <Label col="2"
+                class="h4 fa m-t-5 total-summary-item" text="{{ cartTotalPrice }} &#xf156;"></Label>
+        </GridLayout>
+    </StackLayout>
+</GridLayout>

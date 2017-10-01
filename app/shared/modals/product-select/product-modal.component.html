@@ -1,0 +1,20 @@
+<StackLayout backgroundColor="white"
+    class="p-15">
+   <StackLayout class="form" width="100%">
+       <GridLayout class="dialog-header" rows="auto" columns="*, auto">
+           <Label class="h3" [text]="selectedProdcut.name" col="0" textWrap="true"></Label>
+           <Label col="1" text="{{selectedProdcut.price}}"></Label>
+
+       </GridLayout>
+
+       <StackLayout class="input-field">
+           
+           <TextField class="input-custom" keyboardType="number"  #quantityField id="firstTextFieldId" hint="Quantity" text="" row="1" col="1"></TextField>
+           
+           <!-- <Label class="h2" [text]="selectedProdcut.name"></Label>
+           <TextField class="input input-border" #quantityField id="firstTextFieldId" hint="Focused TextField" text="" row="1" col="1"></TextField> -->
+       </StackLayout>
+
+       <Button class="btn btn-primary btn-active" text="OK" (tap)="printTextValue(quantityField.text)"></Button>
+   </StackLayout>
+</StackLayout>

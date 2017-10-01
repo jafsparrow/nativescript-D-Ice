@@ -1,0 +1,88 @@
+<ActionBar title="Invoice">
+    <ActionItem  text="Cart {{orderCount}}" [nsRouterLink]= "['/order']">
+       
+    </ActionItem>
+
+</ActionBar>
+
+<GridLayout backgroundColor="#dedede" rows="auto, auto, *, auto">
+    <StackLayout orientation="horizontal"
+        backgroundColor="#ffffff"
+        row="0"
+        class="m-x-10 m-t-5 p-l-15">
+        <StackLayout 
+            verticalAlignment="center"
+            class="">
+            <Label text="&#xf067;"
+                class="fa h2"
+                color="blue"></Label>
+        </StackLayout>
+
+        <Label 
+            class="p-10 h3"
+            text="Select Customer"></Label>
+    </StackLayout>
+    <GridLayout columns="*,*,*"
+        row="1"
+        class="m-x-10 m-t-5 p-l-15 invoice-header">
+        <Label 
+            col="0"
+            class="p-10"
+            text="DE101"></Label>
+        <Label 
+            col="1"
+            class="p-10"
+            text="Reliance"></Label>
+        <Label 
+            col="2"
+            class="p-10"
+            text="30/06/2017"></Label>
+    </GridLayout>
+
+
+    <StackLayout backgroundColor="#ffffff"
+        row="2"
+        class="m-x-10 m-t-5 p-5">
+            <!-- >> angular-listview-header-footer -->
+            <RadListView [items]="products">
+                <ng-template  let-item="item" let-odd="odd">
+
+                    <StackLayout orientation="horizontal"
+                        class="bill-item-container bill-item"
+                        [class.odd]="odd"
+                        (tap)="selectQuantity(item)">
+                        <StackLayout class="image-container">
+                            <Image src="res://icon" class="product-image"></Image>
+                        </StackLayout>
+                        
+                        <StackLayout class="product-detail-container" width="50%">
+                            <Label [text]="item.name"
+                            class="product-name"></Label>
+                            
+                            <Label text="item.desc"
+                            class="product-desc"></Label>
+                            
+                        </StackLayout>
+                        <Label text="400" class="p-10 product-name"></Label>
+
+                    </StackLayout>
+
+                </ng-template>
+
+            </RadListView>
+
+    </StackLayout>
+    <StackLayout
+        row="3"
+        class="m-x-10 m-t-5 p-5 total-summary">
+        <GridLayout columns="*,*, auto"
+            class="p-5">
+            <Label col="0"
+                class="h4 total-summary-item" text="Total"></Label>
+            <Label col="1"
+                class="h4 total-summary-item" text="{{orderCount}} items"></Label>
+            <Label col="2"
+                class="h4 fa m-t-5 total-summary-item" text="{{orderTotalPrice}} &#xf156;"></Label>
+        </GridLayout>
+    </StackLayout>
+</GridLayout>
