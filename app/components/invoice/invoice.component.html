@@ -8,6 +8,7 @@
 <GridLayout backgroundColor="#dedede" rows="auto, auto, *, auto">
     <StackLayout orientation="horizontal"
         backgroundColor="#ffffff"
+        *ngIf="!isCustomerSelected"
         row="0"
         class="m-x-10 m-t-5 p-l-15">
         <StackLayout 
@@ -22,7 +23,8 @@
             class="p-10 h3"
             text="Select Customer"></Label>
     </StackLayout>
-    <GridLayout columns="*,*,*"
+    <GridLayout columns="*,*,*,auto"
+        *ngIf="isCustomerSelected"
         row="1"
         class="m-x-10 m-t-5 p-l-15 invoice-header">
         <Label 
@@ -37,6 +39,12 @@
             col="2"
             class="p-10"
             text="30/06/2017"></Label>
+        <Label 
+            col="3"
+            class="p-10 fa m-t-5"
+            text="&#xf044;"
+            (tap)="changeCustomer()"></Label>
+
     </GridLayout>
 
 
@@ -51,11 +59,12 @@
                         class="bill-item-container bill-item"
                         [class.odd]="odd"
                         (tap)="selectQuantity(item)">
-                        <StackLayout class="image-container">
-                            <Image src="res://icon" class="product-image"></Image>
+                        <StackLayout class="image-container" >
+                            <!-- <Image src="{{item.image}}" class="product-image"></Image> -->
+                            <Image [src]="item.image ? item.image: 'res://icon'" class="product-image"></Image>
                         </StackLayout>
                         
-                        <StackLayout class="product-detail-container" width="50%">
+                        <StackLayout class="product-detail-container" width="60%">
                             <Label [text]="item.name"
                             class="product-name"></Label>
                             
@@ -63,7 +72,10 @@
                             class="product-desc"></Label>
                             
                         </StackLayout>
-                        <Label text="400" class="p-10 product-name"></Label>
+                        <StackLayout horizontalAlign="right" width="20%">
+                            <Label text="{{item.price}}  &#xf156;" class="fa p-15 product-price" ></Label>
+                        </StackLayout>
+                        
 
                     </StackLayout>
 

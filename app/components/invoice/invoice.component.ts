@@ -23,6 +23,7 @@ export class InvoiceComponent {
     private _products: ObservableArray<Product>;
     orderCount: number=0;
     orderTotalPrice: number=0;
+    isCustomerSelected: boolean = true;
         constructor(private productService: ProductService,
             private modal: ModalDialogService, 
             private vcRef: ViewContainerRef,
@@ -67,4 +68,8 @@ export class InvoiceComponent {
                 
             });
         }
+    
+    changeCustomer() {
+        this.isCustomerSelected= false;
+    }
 }
