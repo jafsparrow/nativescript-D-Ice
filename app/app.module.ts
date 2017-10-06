@@ -1,6 +1,7 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 
+import { DropDownModule } from "nativescript-drop-down/angular";
 import { NativeScriptUIListViewModule } from "nativescript-pro-ui/listview/angular";
 import { ModalDialogService } from "nativescript-angular/modal-dialog";
 
@@ -31,7 +32,8 @@ import { CheckOutService } from "./shared/services/checkout.services";
     imports: [
         NativeScriptModule,
         AppRoutingModule,
-        NativeScriptUIListViewModule
+        NativeScriptUIListViewModule,
+        DropDownModule
     ],
     declarations: [
         AppComponent,

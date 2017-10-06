@@ -93,4 +93,14 @@ export class CheckOutService {
       // }
     }
 
+    tearDownCurrentCart() {
+      console.log(this.lineItems.length);
+      for (let i = this.lineItems.length; i > 0; i--) {
+        
+        this.lineItems.pop();
+        console.log('*********');
+       }
+       console.log(this.lineItems.length);
+    }
+
 }

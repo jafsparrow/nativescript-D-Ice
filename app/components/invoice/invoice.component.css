@@ -56,3 +56,14 @@
 .produt-desc {
     font-size: 12;
 }
+
+/* dropdown style */
+.dropdown {
+    color: black;
+    text-align: center;
+    padding: 5;
+    background-color: white;
+    font-size: 16;
+    
+    
+}

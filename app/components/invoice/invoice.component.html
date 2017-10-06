@@ -6,7 +6,26 @@
 </ActionBar>
 
 <GridLayout backgroundColor="#dedede" rows="auto, auto, *, auto">
-    <StackLayout orientation="horizontal"
+
+    <StackLayout row="0"
+            [visibility]="isCustomerSelected ? 'collapse' : 'visible'">
+            <DropDown #dd
+                backroundColor="red"
+                [items]="items"
+                [(ngModel)]="selectedIndex"
+                (selectedIndexChanged)="onchange($event)"
+                (opened)="onopen()"
+                (closed)="onclose()"
+                class="dropdown"
+                
+                colSpan="2"
+                hint="Choose a Customer"></DropDown>
+
+    </StackLayout>
+
+
+
+    <!-- <StackLayout orientation="horizontal"
         backgroundColor="#ffffff"
         *ngIf="!isCustomerSelected"
         row="0"
@@ -16,14 +35,17 @@
             class="">
             <Label text="&#xf067;"
                 class="fa h2"
-                color="blue"></Label>
+                color="blue"
+                (tap)="changeCustomer()"></Label>
         </StackLayout>
+
+
 
         <Label 
             class="p-10 h3"
             text="Select Customer"></Label>
-    </StackLayout>
-    <GridLayout columns="*,*,*,auto"
+    </StackLayout> -->
+    <GridLayout columns="auto,*,*,auto"
         *ngIf="isCustomerSelected"
         row="1"
         class="m-x-10 m-t-5 p-l-15 invoice-header">
@@ -34,7 +56,7 @@
         <Label 
             col="1"
             class="p-10"
-            text="Reliance"></Label>
+            [text]="selectedCustomer"></Label>
         <Label 
             col="2"
             class="p-10"
@@ -72,7 +94,7 @@
                             class="product-desc"></Label>
                             
                         </StackLayout>
-                        <StackLayout horizontalAlign="right" width="20%">
+                        <StackLayout horizontalAlign="right">
                             <Label text="{{item.price}}  &#xf156;" class="fa p-15 product-price" ></Label>
                         </StackLayout>
                         
