@@ -13,16 +13,18 @@ import { ItemsComponent } from "./item/items.component";
 import { ItemDetailComponent } from "./item/item-detail.component";
 import { OrderComponent } from "./components/order/order.component";
 import { InvoiceComponent } from "./components/invoice/invoice.component";
+import { DistributorOrderComponent } from "./components/distributor-order/distributor-order.component";
 
 import { ProductQuantityModalComponent } from "./shared/modals/product-select/product-modal.component";
 
 import { ProductService } from "./shared/services/product.service";
 import { CheckOutService } from "./shared/services/checkout.services";
+import { DataPullService } from "./shared/services/datapull.service";
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 // Uncomment and add to NgModule imports  if you need to use the HTTP wrapper
-// import { NativeScriptHttpModule } from "nativescript-angular/http";
+import { NativeScriptHttpModule } from "nativescript-angular/http";
 
 @NgModule({
     entryComponents: [ProductQuantityModalComponent],
@@ -33,7 +35,8 @@ import { CheckOutService } from "./shared/services/checkout.services";
         NativeScriptModule,
         AppRoutingModule,
         NativeScriptUIListViewModule,
-        DropDownModule
+        DropDownModule,
+        NativeScriptHttpModule
     ],
     declarations: [
         AppComponent,
@@ -41,13 +44,15 @@ import { CheckOutService } from "./shared/services/checkout.services";
         ItemDetailComponent,
         OrderComponent,
         InvoiceComponent,
-        ProductQuantityModalComponent
+        ProductQuantityModalComponent,
+        DistributorOrderComponent
     ],
     providers: [
         ItemService,
         ProductService,
         ModalDialogService,
-        CheckOutService
+        CheckOutService,
+        DataPullService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

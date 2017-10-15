@@ -1,0 +1,38 @@
+<StackLayout>
+    
+
+<RadListView [items]="products">
+    <ng-template  let-item="item" let-odd="odd">
+
+        <StackLayout orientation="horizontal"
+            class="bill-item-container bill-item"
+            [class.odd]="odd">
+            <StackLayout class="image-container" >
+                <!-- <Image src="{{item.image}}" class="product-image"></Image> -->
+                <Image [src]="item.picture_url ? item.picture_url: 'res://icon'" class="product-image"></Image>
+            </StackLayout>
+            
+            <StackLayout class="product-detail-container" width="60%">
+                <Label [text]="item.product_name"
+                class="product-name"></Label>
+                
+                <Label text="{{item.product_description}}"
+                class="product-desc"></Label>
+                
+            </StackLayout>
+            <StackLayout horizontalAlign="right">
+                <Label text="{{item.msrp}}  &#xf156;" class="fa p-15 product-price" ></Label>
+            </StackLayout>
+            
+
+        </StackLayout>
+
+    </ng-template>
+
+</RadListView>
+
+<Button text="CreateProduct" (tap)="addNewProduct()"></Button>
+
+<Label text="{{OrderID}}" textWrap="true"></Label>
+
+</StackLayout>
