@@ -56,7 +56,7 @@ export class CheckOutService {
       lineItem.totalPrice = product.price * newQuantity;
   
       const index = this.lineItems.findIndex( item => {
-        return item.product.id === product.id
+        return item.productId === product.id
       });
       Object.assign(this.lineItems[index], lineItem);
   

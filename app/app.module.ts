@@ -20,6 +20,7 @@ import { ProductQuantityModalComponent } from "./shared/modals/product-select/pr
 import { ProductService } from "./shared/services/product.service";
 import { CheckOutService } from "./shared/services/checkout.services";
 import { DataPullService } from "./shared/services/datapull.service";
+import { DistributorOrderService } from "./shared/services/distributor-order.service";
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
@@ -52,7 +53,8 @@ import { NativeScriptHttpModule } from "nativescript-angular/http";
         ProductService,
         ModalDialogService,
         CheckOutService,
-        DataPullService
+        DataPullService,
+        DistributorOrderService
     ],
     schemas: [
         NO_ERRORS_SCHEMA

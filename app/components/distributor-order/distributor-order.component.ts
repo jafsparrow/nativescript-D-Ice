@@ -1,5 +1,15 @@
-import { Component, OnInit } from "@angular/core";
+import { ProductQuantityModalComponent } from '../../shared/modals/product-select/product-modal.component';
+import { DistributorOrderService } from '../../shared/services/distributor-order.service';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { DataPullService } from "../../shared/services/datapull.service";
+
+import { ModalDialogService } from "nativescript-angular/directives/dialogs";
+import { ObservableArray } from "tns-core-modules/data/observable-array";
+import { DropDown } from "nativescript-drop-down";
+import { SelectedIndexChangedEventData } from "nativescript-drop-down";
+
+import { LineItem } from "../../shared/models/line-item";
+
 
 @Component({
     selector: "ns-dist-order",
@@ -10,44 +20,90 @@ import { DataPullService } from "../../shared/services/datapull.service";
 
 export class DistributorOrderComponent implements OnInit {
     products: any;
-    OrderID: number;
-    constructor(private data: DataPullService) {
-
+    ordered_products;
+    orderCount: number = 0;
+    orderId: number;
+    orderDetails: any;
+    
+    constructor(private data: DataPullService,
+        private modal: ModalDialogService, 
+        private vcRef: ViewContainerRef,
+        private checkoutService: DistributorOrderService) {
     }
-
-
     ngOnInit() {
         this.data.getProducts()
             .subscribe(res => {
-                console.log(res);
                 this.products = res;
-            })
+            });
+        this.orderDetails = this.checkoutService.getCartProducts();
+        
+
     }
 
-    addNewProduct() {
-        console.log('adding a new product');
-        let products = [];
-        // this.data.createOrder(products)
+    /**
+     * Get the cart item.
+     * if it is empty, call create order rul.
+     */
+    addToCart(product: any) {
+        // let selectedQuantity = this.selectQuantity(product);
+        let selectedQuantity: number = 0;
+        this.selectQuantity(product).then(res=> {
+            console.log(`addtocart promise inside ${res}`);
+            if(res){
+                if(res.length < 1){
+                    alert('plz enter a value');
+                   
+                }
+                selectedQuantity = parseInt(res);
+                console.log(`the value returned from other method ${selectedQuantity}`)
+            } 
             
-        //     .subscribe(res => {
-        //         console.log('insider the sbuscribe block'); 
-        //         console.log(res);
-        //     })
+        })
+        // form an object with the product details to use for the cart service.
+        if (selectedQuantity == null) {
+            console.log('this is when the no quantity is chosen.');
+            return;
+        }
+        const productsDetails = { 
+            productId: product, 
+            quantity: selectedQuantity
+        }
+        /**
+         * the cart update method should return an observable of success status, 
+            if not toast a message , subscript tho updte order.
+         */
+        const result = this.checkoutService.updateOrder(productsDetails);
+        if (result) {
 
-        // this.data.createPlaceholderPOST()
-        //     .subscribe(res => console.log(res))
+            //get the the new line item count.
+            this.orderCount = this.checkoutService.getTheCartProductCount();
+            //stop spinner from spinning.
+        } else {
+            //
+        }
+     }
+    
+    private async selectQuantity(product) {
+        let options = {
+                context: {'product': product},
+                fullscreen: false,
+                viewContainerRef: this.vcRef
+            };
+           
+            
+        //  const quantity = await this.modal.showModal(ProductQuantityModalComponent, options).then(res=> {
+        //         if(res){
+        //             if(res.length < 1){
+        //                 alert('plz enter a value');
+        //                 return 0;
+        //             }
+        //             console.log( `quantity chosen is ${res}`);
+        //             return parseInt(res);
+        //         }    
+        //     });
+        return await this.modal.showModal(ProductQuantityModalComponent, options);
 
-        this.data.createOrder([])
-            .subscribe(res=> console.log(res))
-
-        this.data.getCartItems()
-            .map(res=> res.json())
-            .subscribe(res=> {
-                console.log(res);
-                
-                this.OrderID = res.order_id;
-            })  
-    }
+    }      
 
 
 }

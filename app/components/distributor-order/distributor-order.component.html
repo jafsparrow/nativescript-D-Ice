@@ -1,3 +1,10 @@
+<ActionBar title="Invoice">
+    <ActionItem  text="Cart {{orderCount}}" [nsRouterLink]= "['/order']">
+       
+    </ActionItem>
+
+</ActionBar>
+
 <StackLayout>
     
 
@@ -6,7 +13,8 @@
 
         <StackLayout orientation="horizontal"
             class="bill-item-container bill-item"
-            [class.odd]="odd">
+            [class.odd]="odd"
+            (tap)="addToCart(item)">
             <StackLayout class="image-container" >
                 <!-- <Image src="{{item.image}}" class="product-image"></Image> -->
                 <Image [src]="item.picture_url ? item.picture_url: 'res://icon'" class="product-image"></Image>
@@ -33,6 +41,6 @@
 
 <Button text="CreateProduct" (tap)="addNewProduct()"></Button>
 
-<Label text="{{OrderID}}" textWrap="true"></Label>
+<!-- <Label text="{{OrderID}}" textWrap="true"></Label> -->
 
 </StackLayout>

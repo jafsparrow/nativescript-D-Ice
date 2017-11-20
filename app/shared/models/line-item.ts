@@ -2,10 +2,10 @@ import { Product } from './product';
 
 
 export class LineItem {
-  id: number;
-  product: Product;
+  id?: number;
+  productId: number;
   quantity: number;
   totalPrice: number;
-  total: number;
+  total?: number;
  
 }
