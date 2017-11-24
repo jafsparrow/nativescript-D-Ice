@@ -14,7 +14,7 @@
         <StackLayout orientation="horizontal"
             class="bill-item-container bill-item"
             [class.odd]="odd"
-            (tap)="addToCart(item)">
+            (tap)="selectQuantity(item)">
             <StackLayout class="image-container" >
                 <!-- <Image src="{{item.image}}" class="product-image"></Image> -->
                 <Image [src]="item.picture_url ? item.picture_url: 'res://icon'" class="product-image"></Image>

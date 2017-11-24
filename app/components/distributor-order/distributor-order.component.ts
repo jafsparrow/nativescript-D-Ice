@@ -45,65 +45,65 @@ export class DistributorOrderComponent implements OnInit {
      * if it is empty, call create order rul.
      */
     addToCart(product: any) {
-        // let selectedQuantity = this.selectQuantity(product);
-        let selectedQuantity: number = 0;
-        this.selectQuantity(product).then(res=> {
-            console.log(`addtocart promise inside ${res}`);
-            if(res){
-                if(res.length < 1){
-                    alert('plz enter a value');
-                   
-                }
-                selectedQuantity = parseInt(res);
-                console.log(`the value returned from other method ${selectedQuantity}`)
-            } 
-            
-        })
-        // form an object with the product details to use for the cart service.
-        if (selectedQuantity == null) {
-            console.log('this is when the no quantity is chosen.');
-            return;
-        }
-        const productsDetails = { 
-            productId: product, 
-            quantity: selectedQuantity
-        }
-        /**
-         * the cart update method should return an observable of success status, 
-            if not toast a message , subscript tho updte order.
-         */
-        const result = this.checkoutService.updateOrder(productsDetails);
-        if (result) {
-
-            //get the the new line item count.
-            this.orderCount = this.checkoutService.getTheCartProductCount();
-            //stop spinner from spinning.
-        } else {
-            //
-        }
+        
+        // let selectedQuantity: number = 0;
+        // // form an object with the product details to use for the cart service.
+        // this.selectQuantity(product).then(res=> {
+        //     selectedQuantity = res;
+        // });
+        // console.log(`after reading from the method ${selectedQuantity}`);
+        // if (selectedQuantity == null) {
+        //     console.log('this is when the no quantity is chosen.');
+        //     return;
+        // }
+        // const productsDetails = { 
+        //     productId: product, 
+        //     quantity: selectedQuantity
+        // }
+        // /**
+        //  * the cart update method should return an observable of success status, 
+        //     if not toast a message , subscript tho updte order.
+        //  */
+        // const result = this.checkoutService.updateOrder(productsDetails);
+        // if (result) {
+        //     //get the the new line item count.
+        //     this.orderCount = this.checkoutService.getTheCartProductCount();
+        //     //stop spinner from spinning.
+        // } else {
+        //     //
+        // }
      }
-    
-    private async selectQuantity(product) {
+    private selectQuantity(product) {
         let options = {
                 context: {'product': product},
                 fullscreen: false,
                 viewContainerRef: this.vcRef
             };
-           
-            
-        //  const quantity = await this.modal.showModal(ProductQuantityModalComponent, options).then(res=> {
-        //         if(res){
-        //             if(res.length < 1){
-        //                 alert('plz enter a value');
-        //                 return 0;
-        //             }
-        //             console.log( `quantity chosen is ${res}`);
-        //             return parseInt(res);
-        //         }    
-        //     });
-        return await this.modal.showModal(ProductQuantityModalComponent, options);
-
+        let selectedQuantity = 0;
+        this.modal.showModal(ProductQuantityModalComponent, options).then(res=> {
+            console.log(`addtocart promise inside ${res}`);
+            if(res){
+                if(res.length < 1){
+                    alert('plz enter a value');
+                    return;
+                 
+                }
+                selectedQuantity = parseInt(res);
+                console.log(`the value returned from other method ${selectedQuantity}`);
+                const productsDetails = { 
+                    productPrice: product.msrp, 
+                    quantity: selectedQuantity
+                }
+                const result = this.checkoutService.updateOrder(productsDetails);
+                if (result) {
+                    //get the the new line item count.
+                    this.orderCount = this.checkoutService.getTheCartProductCount();
+                    //stop spinner from spinning.
+                } else {
+                    alert(`something happened while adding product to cart.`)
+                }
+                
+            };
+        });
     }      
-
-
 }
