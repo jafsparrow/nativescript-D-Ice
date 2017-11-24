@@ -24,22 +24,36 @@ export class DistributorOrderComponent implements OnInit {
     orderCount: number = 0;
     orderId: number;
     orderDetails: any;
+    lineItems: Array<any> = [];
     
     constructor(private data: DataPullService,
         private modal: ModalDialogService, 
         private vcRef: ViewContainerRef,
-        private checkoutService: DistributorOrderService) {
+        private cartService: DistributorOrderService) {
     }
     ngOnInit() {
         this.data.getProducts()
             .subscribe(res => {
                 this.products = res;
             });
-        this.orderDetails = this.checkoutService.getCartProducts();
         
-
+        this.setupTheCart();
     }
 
+    setupTheCart() {
+               
+        if(!this.cartService.orderDetails.hasOwnProperty('ordered_products')) {
+           
+            this.cartService.createANewOrder([])
+                .first()
+                .subscribe( res => {
+                    console.log(res);
+                    this.orderDetails = res});
+
+
+                
+        }
+    }
     /**
      * Get the cart item.
      * if it is empty, call create order rul.
@@ -74,6 +88,7 @@ export class DistributorOrderComponent implements OnInit {
         // }
      }
     private selectQuantity(product) {
+        console.log(this.cartService.orderDetails);
         let options = {
                 context: {'product': product},
                 fullscreen: false,
@@ -83,27 +98,40 @@ export class DistributorOrderComponent implements OnInit {
         this.modal.showModal(ProductQuantityModalComponent, options).then(res=> {
             console.log(`addtocart promise inside ${res}`);
             if(res){
-                if(res.length < 1){
-                    alert('plz enter a value');
-                    return;
-                 
-                }
                 selectedQuantity = parseInt(res);
                 console.log(`the value returned from other method ${selectedQuantity}`);
                 const productsDetails = { 
+                    product: product.id,
                     productPrice: product.msrp, 
                     quantity: selectedQuantity
                 }
-                const result = this.checkoutService.updateOrder(productsDetails);
-                if (result) {
-                    //get the the new line item count.
-                    this.orderCount = this.checkoutService.getTheCartProductCount();
-                    //stop spinner from spinning.
-                } else {
-                    alert(`something happened while adding product to cart.`)
-                }
+                this.addProductToLineItems(productsDetails);
+                // call the service to update the order with new line items.
+                this.cartService.updateProductsInCart(this.orderDetails)
+                    .subscribe(res => {
+                        this.orderDetails = res;
+                        this.lineItems = res.ordered_products;
+                    },
+                    error => alert('product update failed.' + error));
                 
+                
+
             };
         });
-    }      
+    }     
+    
+    
+    addProductToLineItems(productDetails) {
+        const totalPrice: number = productDetails.productPrice * productDetails.quantity;
+        let newLineItem: LineItem = {
+            product: productDetails.product,
+            quantity: productDetails.quantity,
+            price: totalPrice
+        }
+
+        console.log(`product ${newLineItem.product} and quantity is ${newLineItem.quantity}`);
+
+        this.lineItems.push(newLineItem);
+        this.orderDetails.ordered_products = this.lineItems;
+    }
 }
